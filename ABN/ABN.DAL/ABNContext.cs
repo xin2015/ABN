@@ -1,5 +1,9 @@
-﻿using System;
+﻿using ABN.DAL.Entities;
+using ABN.DAL.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +22,16 @@ namespace ABN.DAL
             ProviderName = "System.Data.SqlClient"
         };
 
-        public ABNContext() : base(connectionStringName, backendConfiguration, metadataContainer) { }
+        Dictionary<string, string> mappingDic;
+
+        public ABNContext() : base(connectionStringName, backendConfiguration, metadataContainer)
+        {
+            mappingDic = new Dictionary<string, string>();
+            foreach (var item in Metadata.PersistentTypes)
+            {
+                mappingDic.Add(item.Name, item.Table.Name);
+            }
+        }
 
         public void UpdateSchema()
         {
@@ -48,6 +61,26 @@ namespace ABN.DAL
             {
                 handler.ExecuteDDLScript(script);
             }
+        }
+
+        public virtual void AddBySqlBulkCopy(DataTable dt)
+        {
+            using (SqlBulkCopy sbc = new SqlBulkCopy(Connection.ConnectionString))
+            {
+                sbc.DestinationTableName = dt.TableName;
+                sbc.BatchSize = 30000;
+                foreach (DataColumn item in dt.Columns)
+                {
+                    sbc.ColumnMappings.Add(item.ColumnName, item.ColumnName);
+                }
+                sbc.WriteToServer(dt);
+            }
+        }
+
+        public virtual void AddBySqlBulkCopy<TEntity>(IEnumerable<TEntity> entities) where TEntity : IEntity
+        {
+            DataTable dt = entities.GetDataTable(mappingDic[typeof(TEntity).Name]);
+            AddBySqlBulkCopy(dt);
         }
     }
 }

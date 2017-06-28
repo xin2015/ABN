@@ -8,7 +8,7 @@ using Telerik.OpenAccess;
 
 namespace ABN.DAL.Repositories
 {
-    public class MissingDataRecordRepository : ModificationRepository<MissingDataRecord>
+    public class MissingDataRecordRepository : Repository<MissingDataRecord>
     {
         static int maxMissTimes;
 
