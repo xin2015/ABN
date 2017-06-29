@@ -8,6 +8,6 @@ namespace ABN.DAL.Entities
 {
     public interface IModificationEntity : ICreationEntity
     {
-        DateTime? LastModificationTime { get; set; }
+        DateTime? LastModificationTime { get; }
     }
 }

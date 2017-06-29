@@ -37,11 +37,11 @@ namespace ABN.DAL
 
             configuration.MapType().ToTable("MissingDataRecords");
 
-            configuration.HasProperty(x => x.Id).IsIdentity(KeyGenerator.Autoinc);
-            configuration.HasProperty(x => x.Code).IsNotNullable().HasColumnType("nvarchar").HasLength(64);
-            configuration.HasProperty(x => x.Exception).HasColumnType("nvarchar(max)");
-            configuration.HasProperty(x => x.Conditions).HasColumnType("nvarchar(max)");
+            configuration.HasProperty(x => x.Code).IsIdentity().HasFieldName("_code").IsNotNullable().HasColumnType("nvarchar").HasLength(64);
+            configuration.HasProperty(x => x.Conditions).IsIdentity().HasFieldName("_conditions").IsNotNullable().HasColumnType("nvarchar(max)");
+            configuration.HasProperty(x => x.Time).IsIdentity().HasFieldName("_time");
             configuration.HasProperty(x => x.Status).HasColumnType("bit");
+            configuration.HasProperty(x => x.Exception).HasColumnType("nvarchar(max)");
 
             return configuration;
         }

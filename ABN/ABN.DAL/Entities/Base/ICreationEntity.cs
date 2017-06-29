@@ -8,6 +8,6 @@ namespace ABN.DAL.Entities
 {
     public interface ICreationEntity : IEntity
     {
-        DateTime CreationTime { get; set; }
+        DateTime CreationTime { get; }
     }
 }
