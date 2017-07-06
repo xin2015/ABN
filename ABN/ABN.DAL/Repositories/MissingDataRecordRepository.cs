@@ -32,11 +32,6 @@ namespace ABN.DAL.Repositories
             return Get(code).Where(o => o.Time >= minTime);
         }
 
-        public IQueryable<MissingDataRecord> Get(int[] ids)
-        {
-            return GetAll().Where(o => ids.Contains(o.Id));
-        }
-
         public MissingDataRecord FirstOrDefault(string code, DateTime time, string conditions)
         {
             IQueryable<MissingDataRecord> query = GetAll().Where(o => o.Code == code && !o.Status && o.Time == time);

@@ -65,14 +65,7 @@ namespace ABN.BLL.Syncs.Base
             }
             catch (Exception e)
             {
-                MissingDataRecord record = new MissingDataRecord()
-                {
-                    Code = Code,
-                    Time = time,
-                    Conditions = conditions,
-                    Exception = e.Message,
-                    CreationTime = DateTime.Now
-                };
+                MissingDataRecord record = new MissingDataRecord(Code, conditions, time, e.Message);
                 context.Add(record);
             }
         }
@@ -115,7 +108,6 @@ namespace ABN.BLL.Syncs.Base
                 mdr.Exception = e.Message;
                 mdr.MissTimes += 1;
             }
-            mdr.LastModificationTime = DateTime.Now;
         }
 
         protected abstract bool IsSynchronized(DateTime time, string conditions);

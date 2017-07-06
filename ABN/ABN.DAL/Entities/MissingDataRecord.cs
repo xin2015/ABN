@@ -8,99 +8,108 @@ namespace ABN.DAL.Entities
 {
     public class MissingDataRecord : IModificationEntity
     {
-        private DateTime _creationTime;
+        private DateTime creationTime;
         public DateTime CreationTime
         {
             get
             {
-                return _creationTime;
+                return creationTime;
             }
         }
 
-        private DateTime _lastModificationTime;
+        private DateTime lastModificationTime;
         public DateTime? LastModificationTime
         {
             get
             {
-                return _lastModificationTime;
+                return lastModificationTime;
             }
         }
 
-        private string _code;
+        private string code;
         public string Code
         {
             get
             {
-                return _code;
+                return code;
             }
         }
 
-        private string _conditions;
+        private string conditions;
         public string Conditions
         {
             get
             {
-                return _conditions;
+                return conditions;
             }
         }
 
-        private DateTime _time;
+        private DateTime time;
         public DateTime Time
         {
             get
             {
-                return _time;
+                return time;
             }
         }
 
-        private bool _status;
+        private bool status;
         public bool Status
         {
             get
             {
-                return _status;
+                return status;
             }
             set
             {
-                _status = value;
-                _lastModificationTime = DateTime.Now;
+                status = value;
+                lastModificationTime = DateTime.Now;
             }
         }
 
-        private int _missTimes;
+        private int missTimes;
         public int MissTimes
         {
             get
             {
-                return _missTimes;
+                return missTimes;
             }
             set
             {
-                _missTimes = value;
-                _lastModificationTime = DateTime.Now;
+                missTimes = value;
+                lastModificationTime = DateTime.Now;
             }
         }
 
-        private string _exception;
+        private string exception;
         public string Exception
         {
             get
             {
-                return _exception;
+                return exception;
             }
             set
             {
-                _exception = value;
-                _lastModificationTime = DateTime.Now;
+                exception = value;
+                lastModificationTime = DateTime.Now;
             }
+        }
+
+        public MissingDataRecord()
+        {
+            creationTime = DateTime.Now;
         }
 
         public MissingDataRecord(string code, string conditions, DateTime time) : this()
         {
-            _creationTime = DateTime.Now;
-            _code = code;
-            _conditions = conditions;
-            _time = time;
+            this.code = code;
+            this.conditions = conditions;
+            this.time = time;
+        }
+
+        public MissingDataRecord(string code, string conditions, DateTime time, string exception) : this(code, conditions, time)
+        {
+            this.exception = exception;
         }
     }
 }
